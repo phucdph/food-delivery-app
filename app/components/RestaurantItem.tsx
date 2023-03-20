@@ -2,9 +2,10 @@ import React from "react";
 import type { IRestaurant } from "~/services/typings";
 import Box from "./Box";
 import { AiFillGift, AiFillStar } from "react-icons/ai";
-import { MdPercent} from "react-icons/md";
+import { MdPercent } from "react-icons/md";
 
 import Badge from "./Badge";
+import MyImage from "./Image";
 
 interface Props {
   data: IRestaurant;
@@ -28,18 +29,29 @@ const RestaurantItem: React.FC<Props> = (props) => {
       }}
       position="relative"
     >
-      {restaurant?.isNew && (
+      {restaurant?.isNew && !restaurant?.promotion && (
         <Badge position="absolute" left="0px" top="0px" bg="$blue700">
           <AiFillGift color="white" />
         </Badge>
       )}
-      {!!restaurant?.promotion && (
+      {restaurant?.promotion === "gift" && (
         <Badge position="absolute" left="0px" top="0px" bg="$red500">
           <MdPercent color="white" />
         </Badge>
       )}
-      <Box
-        as="img"
+      {restaurant?.promotion === "1+1" && (
+        <Badge
+          position="absolute"
+          left="0px"
+          top="0px"
+          bg="$violet500"
+          color="$white"
+          fontSize="$sm"
+        >
+          1+1
+        </Badge>
+      )}
+      <MyImage
         borderRadius="$lg"
         backgroundColor="$slate200"
         width="100%"

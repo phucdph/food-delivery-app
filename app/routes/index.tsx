@@ -1,6 +1,10 @@
 import type { LoaderArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { useLoaderData, useSearchParams } from "@remix-run/react";
+import {
+  ShouldRevalidateFunction,
+  useLoaderData,
+  useSearchParams,
+} from "@remix-run/react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Box from "~/components/Box";
 import Button from "~/components/Button";
@@ -31,6 +35,8 @@ export const loader = async ({ request }: LoaderArgs) => {
   );
 };
 
+export const shouldRevalidate = () => false;
+
 const PAGE_SIZE = 20;
 
 export default function Index() {
@@ -40,11 +46,15 @@ export default function Index() {
 
   const searchText = searchParams.get("q") || "";
 
-  const [debouncedSearchText] = useDebouncedValue(searchText, 300)
+  const [debouncedSearchText] = useDebouncedValue(searchText, 300);
 
   const setSearchText = useCallback(
     (t: string) => {
       setSearchParams((prev) => {
+        if (!t) {
+          prev.delete("q");
+          return prev;
+        }
         if (prev.get("q")) {
           prev.set("q", t);
         } else {
@@ -100,7 +110,9 @@ export default function Index() {
 
   const searchResult = useMemo(() => {
     return filteredRestaurants?.filter((r) =>
-      r.name?.toLocaleLowerCase()?.includes(debouncedSearchText?.toLocaleLowerCase())
+      r.name
+        ?.toLocaleLowerCase()
+        ?.includes(debouncedSearchText?.toLocaleLowerCase())
     );
   }, [filteredRestaurants, debouncedSearchText]);
 

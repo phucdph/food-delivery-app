@@ -12,6 +12,8 @@ import type { IRestaurant } from "~/services/typings";
 import RestaurantItem from "~/components/RestaurantItem";
 import Input from "~/components/Input";
 import { AiOutlineSearch } from "react-icons/ai";
+import Empty from "~/components/Empty";
+import useDebouncedValue from "~/hooks/useDebouncedValue";
 
 export const loader = async ({ request }: LoaderArgs) => {
   const [restaurants, categories] = await Promise.all([
@@ -37,6 +39,8 @@ export default function Index() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const searchText = searchParams.get("q") || "";
+
+  const [debouncedSearchText] = useDebouncedValue(searchText, 300)
 
   const setSearchText = useCallback(
     (t: string) => {
@@ -94,13 +98,15 @@ export default function Index() {
   const filteredRestaurants =
     category !== "all" ? restaurantByCategory[category] : restaurants;
 
-  const hasNext = filteredRestaurants?.length > limit;
-
   const searchResult = useMemo(() => {
     return filteredRestaurants?.filter((r) =>
-      r.name?.toLocaleLowerCase()?.includes(searchText?.toLocaleLowerCase())
+      r.name?.toLocaleLowerCase()?.includes(debouncedSearchText?.toLocaleLowerCase())
     );
-  }, [filteredRestaurants, searchText]);
+  }, [filteredRestaurants, debouncedSearchText]);
+
+  const hasNext = searchResult?.length > limit;
+
+  const isEmpty = !searchResult?.length;
 
   const paginatedRestaurants = useMemo(
     () => searchResult?.slice(0, limit),
@@ -158,32 +164,38 @@ export default function Index() {
             onChange={setCategory}
           />
         </Box>
-        <Box
-          display="grid"
-          gridTemplateColumns={{
-            base: "$1",
-            xs: "$2",
-            sm: "$2",
-            md: "$3",
-            lg: "$4",
-            xl: "$4"
-          }}
-          gridGap="$lg"
-          mt="$md"
-        >
-          {paginatedRestaurants?.map((restaurant) => (
-            <RestaurantItem data={restaurant} key={restaurant.id} />
-          ))}
-        </Box>
-        {hasNext && (
-          <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            mt="$md"
-          >
-            <Button onClick={handleLoadMore}>Show More</Button>
-          </Box>
+        {isEmpty ? (
+          <Empty />
+        ) : (
+          <>
+            <Box
+              display="grid"
+              gridTemplateColumns={{
+                base: "$1",
+                xs: "$2",
+                sm: "$2",
+                md: "$3",
+                lg: "$4",
+                xl: "$4",
+              }}
+              gridGap="$lg"
+              mt="$md"
+            >
+              {paginatedRestaurants?.map((restaurant) => (
+                <RestaurantItem data={restaurant} key={restaurant.id} />
+              ))}
+            </Box>
+            {hasNext && (
+              <Box
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                mt="$md"
+              >
+                <Button onClick={handleLoadMore}>Show More</Button>
+              </Box>
+            )}
+          </>
         )}
       </Box>
     </Box>

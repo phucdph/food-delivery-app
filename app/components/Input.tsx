@@ -10,13 +10,7 @@ const Input: React.FC<React.PropsWithChildren<Props>> = (props) => {
   const { icon, w, ...rest } = props;
 
   return (
-    <Box
-      as="span"
-      position="relative"
-      w={w}
-      mh="1px"
-      bg="$red400"
-    >
+    <Box as="span" position="relative" w={w}>
       {icon && (
         <Box
           position="absolute"
@@ -32,10 +26,9 @@ const Input: React.FC<React.PropsWithChildren<Props>> = (props) => {
       )}
       <Box
         as="input"
-        w="100%"
+        w={icon ? "calc(100% - 32px)" : "100%"}
         pr={"0px"}
         pl={icon ? "32px" : null}
-        borderRadius="$lg"
         borderWidth="1px"
         borderStyle="solid"
         borderColor={{

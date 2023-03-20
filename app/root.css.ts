@@ -11,8 +11,8 @@ globalStyle("html, body", {
 
 globalStyle("input", {
   border: '1px solid rgb(203 213 225)',
-  // display: 'block',
+  display: 'block',
   paddingTop: "8px", 
   paddingBottom: "8px", 
-  borderRadius: vars.borderRadius.sm
+  borderRadius: vars.borderRadius.xl
 });

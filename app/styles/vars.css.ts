@@ -1,10 +1,4 @@
 import { createGlobalTheme } from "@vanilla-extract/css";
-import { modularScale } from "polished";
-
-const createScale = (ratio: number, base: number) => (steps: number) =>
-  `${modularScale(steps, base, ratio)}px`;
-
-const lineHeightScale = createScale(1.25, 24);
 
 export const vars = createGlobalTheme(":root", {
   space: {
@@ -107,16 +101,5 @@ export const vars = createGlobalTheme(":root", {
     medium: "500",
     semibold: "600",
     bold: "bold",
-  },
-  lineHeight: {
-    "0": lineHeightScale(0),
-    "500": lineHeightScale(1),
-    "1000": lineHeightScale(2),
-    "1500": lineHeightScale(3),
-    "2000": lineHeightScale(4),
-    "2500": lineHeightScale(5),
-    "3000": lineHeightScale(6),
-    "3500": lineHeightScale(7),
-    "4000": lineHeightScale(8),
-  },
+  }
 });

@@ -19,11 +19,9 @@ specifiers:
   '@vanilla-extract/sprinkles': ^1.5.1
   clsx: ^1.2.1
   cross-env: ^7.0.3
-  csstype: ^3.1.1
   eslint: ^8.27.0
   isbot: latest
   lodash: ^4.17.21
-  polished: ^4.2.2
   rainbow-sprinkles: ^0.16.0
   react: ^18.2.0
   react-dom: ^18.2.0
@@ -42,10 +40,8 @@ dependencies:
   '@vanilla-extract/sprinkles': 1.5.1_qfizfuqympj3byv36k7ie7wo3i
   clsx: 1.2.1
   cross-env: 7.0.3
-  csstype: 3.1.1
   isbot: 3.6.7
   lodash: 4.17.21
-  polished: 4.2.2
   rainbow-sprinkles: 0.16.0_gxr7mjnaotagrljl2rmp6svzjm
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
@@ -5631,13 +5627,6 @@ packages:
       jsonc-parser: 3.2.0
       mlly: 1.2.0
       pathe: 1.1.0
-
-  /polished/4.2.2:
-    resolution: {integrity: sha512-Sz2Lkdxz6F2Pgnpi9U5Ng/WdWAUZxmHrNPoVlm3aAemxoy2Qy7LGjQg4uf8qKelDAUW94F4np3iH2YPf2qefcQ==}
-    engines: {node: '>=10'}
-    dependencies:
-      '@babel/runtime': 7.21.0
-    dev: false
 
   /postcss-discard-duplicates/5.1.0_postcss@8.4.21:
     resolution: {integrity: sha512-zmX3IoSI2aoenxHV6C7plngHWWhUOV3sP1T8y2ifzxzbtnuhk1EdPwm0S1bIUNaJ2eNbWeGLEwzw8huPD67aQw==}
